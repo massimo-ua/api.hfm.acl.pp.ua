@@ -4,7 +4,8 @@
   "description": "public api for hfm module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/massimo-ua/api.hfm.acl.pp.ua/issues"
   },
-  "homepage": "https://github.com/massimo-ua/api.hfm.acl.pp.ua#readme"
+  "homepage": "https://github.com/massimo-ua/api.hfm.acl.pp.ua#readme",
+  "dependencies": {
+    "koa": "2.4.1",
+    "koa-router": "7.3.0",
+    "winston": "2.4.0"
+  }
 }
