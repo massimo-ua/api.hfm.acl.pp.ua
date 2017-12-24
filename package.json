@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test-web": "mocha app.spec.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/massimo-ua/api.hfm.acl.pp.ua#readme",
   "dependencies": {
+    "joi": "13.0.2",
     "koa": "2.4.1",
     "koa-router": "7.3.0",
     "winston": "2.4.0"
