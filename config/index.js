@@ -6,7 +6,8 @@ const envVarsSchema = joi.object({
     DB_USER: joi.string().default('hfmt'),
     DB_PASSWORD: joi.string().default('hfmt'),
     DB_HOST: joi.string().default('192.168.34.44'),
-    DB_DIALECT: joi.string().default('postgres')
+    DB_DIALECT: joi.string().default('postgres'),
+    JWT_SECRET: joi.string().default('3198ab6cf20a7a22da4d8f121f665475')
 }).unknown().required();
 const { error, value: envVars } = joi.validate(process.env, envVarsSchema)
 if (error) {
@@ -28,6 +29,9 @@ const config = {
             acquire: 30000,
             idle: 10000
         }
+    },
+    jwt: {
+        secret: envVars.JWT_SECRET
     }
 };
 module.exports = config;

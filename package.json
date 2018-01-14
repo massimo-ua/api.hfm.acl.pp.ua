@@ -19,8 +19,13 @@
   },
   "homepage": "https://github.com/massimo-ua/api.hfm.acl.pp.ua#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "joi": "13.0.2",
+    "jsonwebtoken": "^8.1.0",
     "koa": "2.4.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
+    "koa-jwt": "^3.3.0",
     "koa-router": "7.3.0",
     "pg": "6.4.2",
     "pg-connection-string": "2.0.0",
