@@ -1,7 +1,11 @@
 'use strict';
 
-//const middleware = require('./middleware');
+const validator = require('./validator');
+const queryParser = require('./queryParser');
+const requestLogger = require('./requestLogger');
 
 module.exports = {
-    //middleware
+    validator,
+    queryParser,
+    requestLogger
 };

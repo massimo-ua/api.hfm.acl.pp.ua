@@ -9,14 +9,18 @@ const users = require('./users');
 const router = new Router();
 router
     .use(bodyParser())
+    .use(middleware.queryParser({ allowDots: true }))
     .use(jwt({ secret: config.jwt.secret }).unless({ path: [
+        /^\/v1\/hello/,
         /^\/v1\/auth\/login/,
         /^\/v1\/auth\/register/,
         /^\/v1\/auth\/confirm/
     ]}));
 
-router.get('/hello', (ctx) => {
-    ctx.body = 'Hello Node.js!';
+router.get('/v1/hello', (ctx) => {
+    ctx.body = {
+        status: "Ok"
+    };
 });
 
 router.get('/v1/categories', caterories.getAll);
