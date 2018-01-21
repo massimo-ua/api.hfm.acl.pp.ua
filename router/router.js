@@ -13,7 +13,7 @@ router
     .use(jwt({ secret: config.jwt.secret }).unless({ path: [
         /^\/v1\/hello/,
         /^\/v1\/auth\/login/,
-        /^\/v1\/auth\/register/,
+        /^\/v1\/auth\/signup/,
         /^\/v1\/auth\/confirm/
     ]}));
 
@@ -25,5 +25,6 @@ router.get('/v1/hello', (ctx) => {
 
 router.get('/v1/categories', caterories.getAll);
 router.post('/v1/auth/login', users.login);
+router.post('/v1/auth/signup', users.signup);
 
 module.exports = router;

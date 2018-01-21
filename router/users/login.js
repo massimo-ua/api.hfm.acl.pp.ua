@@ -1,12 +1,13 @@
 'use strict';
 const bcrypt = require('bcrypt');
-const jsonwebtoken = require('jsonwebtoken');
 const compose = require('koa-compose');
 const logger = require('../../logger');
 const User = require('./model');
 const middleware = require('../../middleware');
 const config = require('../../config');
 const joi = require('joi');
+const { to } = require('await-to-js');
+const helper = require('../../helpers');
 
 const params = joi.object({
     login: joi.string().required(),
@@ -14,34 +15,21 @@ const params = joi.object({
 }).required();
 
 async function login(ctx) {
-    const user = await User.findOne({where: {login: ctx.request.body.login}});
-    if(!user) {
+    let err, user, isPasswordValid, token;
+    [err, user] = await to(User.findOne({where: {login: ctx.request.body.login}}));
+    if(!user || err) {
         ctx.status = 404;
         return;
     }
-    const isPasswordValid = await bcrypt.compare(ctx.request.body.password, user.password);
+    [err, isPasswordValid] = await to(bcrypt.compare(ctx.request.body.password, user.password));
     if(isPasswordValid) {
-        let data = {
-            _id: user._id,
-            login: user.login,
-            name: user.name
-        };
-        let token;
-        try {
-            token = await jsonwebtoken.sign(
-                data,
-                config.jwt.secret,
-                {expiresIn: "1d"}
-            );
-        } catch(err) {
-            ctx.status = 500;
-            ctx.body = err;
-        }
+        [err, token] = await to(helper.createToken(user));
         ctx.body = {
             token: token
         };
     } else {
         logger.error(`Password check failed for login ${ctx.request.body.login}`);
+        // TBD: response helper
     }
 }
 

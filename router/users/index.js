@@ -2,12 +2,12 @@
 
 const login = require('./login.js');
 const logout = require('./logout');
-const register = require('./register');
+const signup = require('./signup');
 const confirm = require('./confirm');
 
 module.exports = {
     login,
     logout,
-    register,
+    signup,
     confirm
 };
