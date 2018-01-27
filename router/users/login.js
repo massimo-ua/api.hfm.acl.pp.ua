@@ -6,8 +6,7 @@ const User = require('./model');
 const middleware = require('../../middleware');
 const config = require('../../config');
 const joi = require('joi');
-const { to } = require('await-to-js');
-const helper = require('../../helpers');
+const { createToken, throwError, to } = require('../../helpers');
 
 const params = joi.object({
     login: joi.string().required(),
@@ -17,19 +16,23 @@ const params = joi.object({
 async function login(ctx) {
     let err, user, isPasswordValid, token;
     [err, user] = await to(User.findOne({where: {login: ctx.request.body.login}}));
-    if(!user || err) {
-        ctx.status = 404;
-        return;
+    if(err) {
+        throwError(err.message, true);
     }
     [err, isPasswordValid] = await to(bcrypt.compare(ctx.request.body.password, user.password));
+    if(err) {
+        throwError(err.message, true);
+    }
     if(isPasswordValid) {
-        [err, token] = await to(helper.createToken(user));
+        [err, token] = await to(createToken(user));
+        if(err) {
+            throwError(err.message, true);
+        }
         ctx.body = {
             token: token
         };
     } else {
-        logger.error(`Password check failed for login ${ctx.request.body.login}`);
-        // TBD: response helper
+        throwError('Authorization failed', true, 401);
     }
 }
 

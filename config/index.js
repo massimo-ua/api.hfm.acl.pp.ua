@@ -6,6 +6,7 @@ const envVarsSchema = joi.object({
     DB_USER: joi.string().default('hfmt'),
     DB_PASSWORD: joi.string().default('hfmt'),
     DB_HOST: joi.string().default('192.168.34.44'),
+    DB_PORT: joi.string().default('5432'),
     DB_DIALECT: joi.string().default('postgres'),
     JWT_SECRET: joi.string().default('3198ab6cf20a7a22da4d8f121f665475')
 }).unknown().required();
@@ -22,6 +23,7 @@ const config = {
         username: envVars.DB_USER,
         password: envVars.DB_PASSWORD,
         host: envVars.DB_HOST,
+        port: envVars.DB_PORT,
         dialect: envVars.DB_DIALECT,
         pool: {
             max: 5,

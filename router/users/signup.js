@@ -8,8 +8,7 @@ const User = require('./model');
 const middleware = require('../../middleware');
 const config = require('../../config');
 const joi = require('joi');
-const { to } = require('await-to-js');
-const helper = require('../../helpers');
+const { createToken, throwError, to } = require('../../helpers');
 
 const params = joi.object({
     login: joi.string().required(),
@@ -36,7 +35,7 @@ async function signup(ctx) {
         ctx.status = 500;
         return;
      }
-    [err, token] = await to(helper.createToken(user));
+    [err, token] = await to(createToken(user));
     if(err) {
         logger.error(err);
         ctx.status = 500;
