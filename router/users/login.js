@@ -16,8 +16,8 @@ const params = joi.object({
 async function login(ctx) {
     let err, user, isPasswordValid, token;
     [err, user] = await to(User.findOne({where: {login: ctx.request.body.login}}));
-    if(err) {
-        throwError(err.message, true);
+    if(err || !user) {
+        throwError('Authorization failed', true, 401);
     }
     [err, isPasswordValid] = await to(bcrypt.compare(ctx.request.body.password, user.password));
     if(err) {

@@ -18,12 +18,9 @@ const params = joi.object({
 
 async function signup(ctx) {
     let err, password, user, token;
-    
     [err, password] = await to(bcrypt.hash(ctx.request.body.password, 5));
     if(err) {
-        logger.error(err);
-        ctx.status = 500;
-        return;
+        throwError(err.message, true);
     }
     [err, user] = await to(User.create({ 
         login: ctx.request.body.login,
@@ -31,15 +28,11 @@ async function signup(ctx) {
         name: ctx.request.body.name
      }));
      if(err) {
-        logger.error(err);
-        ctx.status = 500;
-        return;
+        throwError(err.message, true);
      }
     [err, token] = await to(createToken(user));
     if(err) {
-        logger.error(err);
-        ctx.status = 500;
-        return;
+        throwError(err.message, true);
     }
     ctx.body = {
         token: token
