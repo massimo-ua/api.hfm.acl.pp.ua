@@ -1,6 +1,5 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 const compose = require('koa-compose');
 const logger = require('../../logger');
@@ -17,14 +16,10 @@ const params = joi.object({
 }).required();
 
 async function signup(ctx) {
-    let err, password, user, token;
-    [err, password] = await to(bcrypt.hash(ctx.request.body.password, 5));
-    if(err) {
-        throwError(err.message, true);
-    }
+    let err, user, token;
     [err, user] = await to(User.create({ 
         login: ctx.request.body.login,
-        password: password,
+        password: ctx.request.body.password,
         name: ctx.request.body.name
      }));
      if(err) {

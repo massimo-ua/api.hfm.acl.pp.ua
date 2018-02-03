@@ -1,7 +1,9 @@
 'use strict';
-
 const Sequelize = require('sequelize');
 const db = require('../../db');
+const bcrypt = require('bcrypt');
+const { throwError, to } = require('../../helpers');
+
 const User = db.define('user', {
       _id: {
         type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true
@@ -25,4 +27,17 @@ const User = db.define('user', {
         }
       ]
     });
+    // hook that hashes user password every time before save or update
+    User.addHook('beforeSave', 'hashUserPassword', _hashUserPassword);
+
+    async function _hashUserPassword(user) {
+      let error, hash;
+      if(user.password) {
+        [error, hash] = await to(bcrypt.hash(user.password, 5));
+        if(error) {
+            throwError(error.message, true);
+        }
+        user.password = hash;
+      }
+    }
 module.exports = User;
