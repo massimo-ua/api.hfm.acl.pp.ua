@@ -3,8 +3,8 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const jwt = require('koa-jwt');
 const middleware = require('../middleware');
-const caterories = require('./categories');
-const users = require('./users');
+const caterories = require('./category');
+const users = require('./user');
 
 const router = new Router();
 router
