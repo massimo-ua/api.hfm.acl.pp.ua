@@ -13,11 +13,17 @@ const Category = db.define('category', {
       },
       close_date: {
         type: Sequelize.DATE
+      },
+      type: {
+        type: Sequelize.INTEGER,
+        validate: {
+          isIn: [[1, 2]],
+        }
       }
     },
     {
       timestamps: false
     });
-    Category.hasMany(Category, { foreignKey: 'parent_id'});
-    Category.belongsTo(Category, {foreignKey: 'parent_id'});
+    Category.hasMany(Category, { as: "sub_categories", foreignKey: "parent_id"});
+    Category.belongsTo(Category, { as: "parent_category", foreignKey: "parent_id"});
 module.exports = Category;

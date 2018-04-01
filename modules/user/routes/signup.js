@@ -2,12 +2,12 @@
 
 const jsonwebtoken = require('jsonwebtoken');
 const compose = require('koa-compose');
-const logger = require('../../logger');
-const User = require('./model');
-const middleware = require('../../middleware');
-const config = require('../../config');
+const logger = require("../../../logger");
+const User = require("../model");
+const middleware = require("../../../middleware");
+const config = require("../../../config");
 const joi = require('joi');
-const { createToken, throwError, to } = require('../../helpers');
+const { createToken, throwError, to } = require("../../../helpers");
 
 const params = joi.object({
     login: joi.string().required(),

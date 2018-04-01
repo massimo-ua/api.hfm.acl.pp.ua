@@ -3,8 +3,8 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const jwt = require('koa-jwt');
 const middleware = require('../middleware');
-const caterories = require('./category');
-const users = require('./user');
+const caterories = require("../modules/category/routes");
+const users = require("../modules/user/routes");
 
 const router = new Router();
 router
@@ -24,6 +24,7 @@ router.get('/v1/hello', (ctx) => {
 });
 
 router.get('/v1/categories', caterories.getAll);
+router.get('/v1/categories/:id', caterories.getById);
 router.post('/v1/auth/login', users.login);
 router.post('/v1/auth/signup', users.signup);
 

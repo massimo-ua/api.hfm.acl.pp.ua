@@ -11,7 +11,8 @@ const sequelize = new Sequelize(
         port: config.database.port,
         dialect: config.database.dialect,
         pool: config.database.pool,
-        operatorsAliases: false
-    }
+        operatorsAliases: false,
+        logging: config.database.logging
+    },
 );
 module.exports = sequelize;

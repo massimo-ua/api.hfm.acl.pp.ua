@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "test-web": "APP_PORT=3000 mocha app.spec.js"
+    "start": "nodemon --inspect index.js",
+    "test-web": "mocha app.spec.js"
   },
   "repository": {
     "type": "git",
