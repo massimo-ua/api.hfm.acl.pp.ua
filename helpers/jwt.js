@@ -22,7 +22,6 @@ function createToken(user) {
             reject(err);
         }
     });
-
 }
 
 module.exports = createToken;

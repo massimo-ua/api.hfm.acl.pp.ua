@@ -7,9 +7,8 @@ const router = require('./router');
 const middleware = require('./middleware');
 
 
-app
-    .use(middleware.requestLogger())
-    .use(router.routes());
+app.use(middleware.requestLogger());
+app.use(router);
 
 app.on('error', (err) => {
     logger.error('Server error', { error: err.message });

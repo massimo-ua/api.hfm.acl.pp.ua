@@ -1,31 +1,15 @@
-const config = require('../config');
-const Router = require('koa-router');
-const bodyParser = require('koa-bodyparser');
-const jwt = require('koa-jwt');
-const middleware = require('../middleware');
-const caterories = require("../modules/category/routes");
-const users = require("../modules/user/routes");
+const compose = require("koa-compose"),
+      // module routes
+      root = require("./root"),
+      caterories = require("../modules/category/routes"),
+      users = require("../modules/user/routes"),
+      accounts = require("../modules/account/routes");
 
-const router = new Router();
-router
-    .use(bodyParser())
-    .use(middleware.queryParser({ allowDots: true }))
-    .use(jwt({ secret: config.jwt.secret }).unless({ path: [
-        /^\/v1\/hello/,
-        /^\/v1\/auth\/login/,
-        /^\/v1\/auth\/signup/,
-        /^\/v1\/auth\/confirm/
-    ]}));
+const appRouter = compose([
+    root.routes(), root.allowedMethods(),
+    caterories.routes(), caterories.allowedMethods(),
+    users.routes(), users.allowedMethods(),
+    accounts.routes(), accounts.allowedMethods()
+]);
 
-router.get('/v1/hello', (ctx) => {
-    ctx.body = {
-        status: "Ok"
-    };
-});
-
-router.get('/v1/categories', caterories.getAll);
-router.get('/v1/categories/:id', caterories.getById);
-router.post('/v1/auth/login', users.login);
-router.post('/v1/auth/signup', users.signup);
-
-module.exports = router;
+module.exports = appRouter; 
