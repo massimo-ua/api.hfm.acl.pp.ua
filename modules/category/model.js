@@ -9,9 +9,10 @@ const Category = db.define('category', {
         type: Sequelize.STRING, allowNull: false
       },
       visible: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN,
+        default: true
       },
-      close_date: {
+      closed: {
         type: Sequelize.DATE
       },
       type: {
@@ -19,6 +20,9 @@ const Category = db.define('category', {
         validate: {
           isIn: [[1, 2]],
         }
+      },
+      parent_id: {
+        type: Sequelize.INTEGER, allowNull: true
       }
     },
     {
