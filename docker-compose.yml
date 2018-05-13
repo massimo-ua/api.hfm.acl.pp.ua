@@ -8,12 +8,3 @@ services:
      - POSTGRES_USER=hfm
     ports:
      - "5432:5432"
-  pgadmin4:
-    image: "dpage/pgadmin4"
-    logging:
-     driver: none
-    environment:
-     - PGADMIN_DEFAULT_EMAIL=admin
-     - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-     - "8080:80"
