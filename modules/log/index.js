@@ -1,5 +1,7 @@
 'use strict'
 const model = require('./model');
+const router = require('./routes');
 module.exports = {
-    model 
+    model,
+    router
 }

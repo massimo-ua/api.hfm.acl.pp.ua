@@ -2,5 +2,6 @@
 
 module.exports = {
     transaction: require('./transaction'),
-    transaction_params: require('./transaction_params')
+    transaction_param: require('./transaction_params'),
+    transfer: require('./transfer')
 }

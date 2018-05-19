@@ -9,7 +9,7 @@ const router = routerHelper.initRouter({ prefix: "/v1/auth" }, [
     /^\/v1\/auth\/login/,
     /^\/v1\/auth\/signup/,
     /^\/v1\/auth\/confirm/
-])
+]);
 router.post("/login", login);
 router.post("/signup", signup);
 

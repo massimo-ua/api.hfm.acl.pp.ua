@@ -1,5 +1,6 @@
 'use strict'
 
 module.exports = {
-    models: require('./models')
+    models: require('./models'),
+    router: require('./routes')
 }

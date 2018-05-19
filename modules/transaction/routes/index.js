@@ -1,9 +1,7 @@
 'use strict';
+const router = require('../../../helpers/').initRouter({ prefix: '/v1/transactions'}),
+      getById = require('./getById');
 
-const getAll = require('./getAll');
-const getById = require('./getById');
+router.get('/:id', getById);
 
-module.exports = {
-    getAll,
-    getById
-};
+module.exports = router;

@@ -1,10 +1,12 @@
 'use strict';
 const Sequelize = require('sequelize');
-const db = require('../../db');
-const User = require('../user/model');
-const Account = require('../account/models').account;
+const db = require('../../../db');
+const User = require('../../user/model');
+const Account = require('../../account/models').account;
+const Params = require('./transaction_params');
+const Transfer = require('./transfer');
 const Transaction = db.define('transaction', {
-      _id: {
+      id: {
         type: Sequelize.INTEGER, primaryKey: true
       },
       type: {
@@ -18,14 +20,8 @@ const Transaction = db.define('transaction', {
       transaction_date: {
         type: Sequelize.DATE, allowNull: false
       },
-      created_at: {
-        type: Sequelize.DATE, allowNull: false
-      },
       user_id: {
         type: Sequelize.INTEGER, allowNull: false
-      },
-      deleted_at: {
-        type: Sequelize.DATE
       }
     },
     {
@@ -33,4 +29,7 @@ const Transaction = db.define('transaction', {
     });
     Transaction.belongsTo(Account, { as: "account", foreignKey: "account_id"});
     Transaction.belongsTo(User, { as: "user", foreignKey: "user_id"});
+    Transaction.hasMany(Params, { as: "params", foreignKey: "transaction_id"});
+    Transaction.hasOne(Transfer, { as: "source", foreignKey: "debit_id"});
+    Transaction.hasOne(Transfer, { as: "target", foreignKey: "credit_id"});
 module.exports = Transaction;
