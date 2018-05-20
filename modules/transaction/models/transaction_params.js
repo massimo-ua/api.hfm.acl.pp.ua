@@ -1,11 +1,13 @@
 'use strict';
-const Sequelize = require('sequelize');
-const db = require('../../../db');
-const Category = require('../../category/model');
-const Transaction = require('./transaction');
+const Sequelize = require('sequelize'),
+      db = require('../../../db'),
+      Category = require('../../category/model'),
+      Transaction = require('./transaction');
 const TransactionParams = db.define('transaction_param', {
       id: {
-        type: Sequelize.INTEGER, primaryKey: true
+        type: Sequelize.INTEGER, 
+        primaryKey: true,
+        autoIncrement: true,
       },    
       transaction_id: {
         type: Sequelize.INTEGER, allowNull: false
@@ -21,10 +23,20 @@ const TransactionParams = db.define('transaction_param', {
       },
       description: {
         type: Sequelize.STRING, allowNull: true
+      },
+      deleted_at: {
+        type: Sequelize.DATE, allowNull: true
       }
     },
     {
-      timestamps: false
+      timestamps: false,
+      defaultScope: {
+        where: {
+          deleted_at: {
+            [Sequelize.Op.eq]: null
+          }
+        }
+      }
     });
     TransactionParams.belongsTo(Category, { as: 'category', foreignKey: 'category_id'});
 module.exports = TransactionParams;

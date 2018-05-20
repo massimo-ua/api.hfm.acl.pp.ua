@@ -187,7 +187,8 @@ CREATE TABLE public.transaction_params (
     category_id integer,
     amount bigint NOT NULL,
     equivalent bigint NOT NULL,
-    description character varying(255)
+    description character varying(255),
+    deleted_at timestamp without time zone
 );
 
 

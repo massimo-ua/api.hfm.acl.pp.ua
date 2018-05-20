@@ -4,7 +4,9 @@ const db = require('../../../db');
 const Transaction = require('./transaction');
 const Transfer = db.define('transfer', {
       id: {
-        type: Sequelize.INTEGER, primaryKey: true
+        type: Sequelize.INTEGER, 
+        primaryKey: true,
+        autoIncrement: true,
       },    
       debit_id: {
         type: Sequelize.INTEGER, allowNull: false

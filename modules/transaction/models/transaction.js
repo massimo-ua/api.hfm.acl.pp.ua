@@ -1,13 +1,16 @@
 'use strict';
-const Sequelize = require('sequelize');
-const db = require('../../../db');
-const User = require('../../user/model');
-const Account = require('../../account/models').account;
-const Params = require('./transaction_params');
-const Transfer = require('./transfer');
+const Sequelize = require('sequelize'),
+      db = require('../../../db'),
+      User = require('../../user/model'),
+      Account = require('../../account/models').account,
+      Params = require('./transaction_params'),
+      Transfer = require('./transfer'),
+      Op = Sequelize.Op;
 const Transaction = db.define('transaction', {
       id: {
-        type: Sequelize.INTEGER, primaryKey: true
+        type: Sequelize.INTEGER, 
+        primaryKey: true,
+        autoIncrement: true,
       },
       type: {
         type: Sequelize.ENUM,
@@ -22,10 +25,25 @@ const Transaction = db.define('transaction', {
       },
       user_id: {
         type: Sequelize.INTEGER, allowNull: false
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP(3)')
+      },
+      deleted_at: {
+        type: Sequelize.DATE, allowNull: true
       }
     },
     {
-      timestamps: false
+      timestamps: false,
+      defaultScope: {
+        where: {
+          deleted_at: {
+            [Op.eq]: null
+          }
+        }
+      }
     });
     Transaction.belongsTo(Account, { as: "account", foreignKey: "account_id"});
     Transaction.belongsTo(User, { as: "user", foreignKey: "user_id"});
