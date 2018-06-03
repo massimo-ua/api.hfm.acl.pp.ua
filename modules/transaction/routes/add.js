@@ -1,13 +1,11 @@
 'use strict';
 const compose = require('koa-compose'),
-      middleware = require('../../../middleware'),
-      bodySchema = require('../validators').add,
-      Transaction = require('../models').transaction,
-      User = require('../../user/model'),
-      { throwError, to } = require('../../../helpers');
+    middleware = require('../../../middleware'),
+    bodySchema = require('../validators').add,
+    Transaction = require('../models').transaction,
+    { throwError, to } = require('../../../helpers');
 
-async function add(ctx, next) {
-    console.log(ctx);
+async function add(ctx) {
     const { type, account_id, transaction_date } = ctx.request.body;
     const user_id = ctx.state.user._id;
     const [err, transaction] = await to(Transaction.create({
@@ -24,7 +22,7 @@ async function add(ctx, next) {
 
 module.exports = compose([
     middleware.validator({
-      body: bodySchema
+        body: bodySchema
     }),
     add
 ]);
