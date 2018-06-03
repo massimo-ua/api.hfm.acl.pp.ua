@@ -14,7 +14,10 @@ const params = joi.object({
 
 async function login(ctx) {
     let err, user, isPasswordValid, token;
-    [err, user] = await to(User.findOne({where: {login: ctx.request.body.login}}));
+    [err, user] = await to(User.findOne({where: {
+        login: ctx.request.body.login,
+        is_active: true
+    }}));
     if(err || !user) {
         throwError('Authorization failed', true, 401);
     }

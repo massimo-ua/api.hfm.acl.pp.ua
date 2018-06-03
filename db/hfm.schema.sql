@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.3
--- Dumped by pg_dump version 10.3 (Ubuntu 10.3-1)
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4 (Debian 10.4-2)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -310,7 +310,8 @@ CREATE TABLE public.users (
     _id integer DEFAULT nextval('public.users_id_seq'::regclass) NOT NULL,
     login character varying(10) NOT NULL,
     password character varying(60) NOT NULL,
-    name character varying(100) NOT NULL
+    name character varying(100) NOT NULL,
+    is_active boolean DEFAULT false NOT NULL
 );
 
 

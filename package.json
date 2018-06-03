@@ -42,7 +42,7 @@
     "install": "0.11.0",
     "jshint": "2.9.5",
     "mocha": "5.2.0",
-    "npm": "6.0.1",
+    "npm": "^6.1.0",
     "sinon": "5.0.7",
     "sinon-chai": "3.0.0",
     "super-request": "1.2.0"
