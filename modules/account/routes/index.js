@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 const router = require('../../../helpers/').initRouter({ prefix: '/v1/accounts' }),
-      getall = require('./getall'),
-      getbyid = require('./getbyid'),
-      getactive = require('./getactive'),
-      getclosed = require('./getclosed'),
-      getnonzero = require('./getnonzero'),
-      add = require('./add');
+    getall = require('./getall'),
+    getbyid = require('./getbyid'),
+    getactive = require('./getactive'),
+    getclosed = require('./getclosed'),
+    getnonzero = require('./getnonzero'),
+    add = require('./add');
      
 router.get('/', getall);
 router.get('/:id', getbyid);
