@@ -2,32 +2,35 @@
 const Sequelize = require('sequelize');
 const db = require('../../db');
 const Category = db.define('category', {
-      id: {
-        type: Sequelize.INTEGER, primaryKey: true
-      },
-      name: {
-        type: Sequelize.STRING, allowNull: false
-      },
-      visible: {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    name: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    visible: {
         type: Sequelize.BOOLEAN,
         default: true
-      },
-      closed: {
+    },
+    closed: {
         type: Sequelize.DATE
-      },
-      type: {
+    },
+    type: {
         type: Sequelize.INTEGER,
         validate: {
-          isIn: [[1, 2]],
+            isIn: [[1, 2]],
         }
-      },
-      parent_id: {
-        type: Sequelize.INTEGER, allowNull: true
-      }
     },
-    {
-      timestamps: false
-    });
-    Category.hasMany(Category, { as: "sub_categories", foreignKey: "parent_id"});
-    Category.belongsTo(Category, { as: "parent_category", foreignKey: "parent_id"});
+    parent_id: {
+        type: Sequelize.INTEGER, allowNull: true
+    }
+},
+{
+    timestamps: false
+});
+Category.hasMany(Category, { as: 'sub_categories', foreignKey: 'parent_id'});
+Category.belongsTo(Category, { as: 'parent_category', foreignKey: 'parent_id'});
 module.exports = Category;

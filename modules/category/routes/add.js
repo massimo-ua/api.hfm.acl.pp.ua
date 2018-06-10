@@ -1,23 +1,27 @@
 'use strict';
-const compose = require('koa-compose'),
+const Category = require('../model'),
+    compose = require('koa-compose'),
     middleware = require('../../../middleware'),
     bodySchema = require('../validators').add,
-    Transaction = require('../models').transaction,
     { throwError, to } = require('../../../helpers');
 
 async function add(ctx) {
-    const { type, account_id, transaction_date } = ctx.request.body;
-    const user_id = ctx.state.user._id;
-    const [err, transaction] = await to(Transaction.create({
+    const {
+        name,
+        visible,
         type,
-        account_id,
-        transaction_date,
-        user_id
+        parent_id,
+    } = ctx.request.body;
+    const [err, category] = await to(Category.create({
+        name,
+        visible,
+        type,
+        parent_id,
     }));
-    if(err || !transaction) {
+    if(err || !category) {
         throwError('The request could not be completed', true, 409);
     }
-    ctx.body = transaction;
+    ctx.body = category;
 }
 
 module.exports = compose([

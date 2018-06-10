@@ -81,7 +81,7 @@ ALTER TABLE public.accounts_id_seq OWNER TO hfm;
 --
 
 CREATE TABLE public.accounts (
-    _id integer DEFAULT nextval('public.accounts_id_seq'::regclass) NOT NULL,
+    id integer DEFAULT nextval('public.accounts_id_seq'::regclass) NOT NULL,
     name character varying(100) NOT NULL,
     currency_id integer NOT NULL,
     balance bigint DEFAULT 0,
@@ -358,7 +358,7 @@ ALTER TABLE ONLY public.account_types
 --
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_pkey PRIMARY KEY (_id);
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
 
 
 --
@@ -540,7 +540,7 @@ ALTER TABLE ONLY public.transaction_params
 --
 
 ALTER TABLE ONLY public.transactions
-    ADD CONSTRAINT transactions_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.accounts(_id) ON DELETE RESTRICT;
+    ADD CONSTRAINT transactions_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.accounts(id) ON DELETE RESTRICT;
 
 
 --
