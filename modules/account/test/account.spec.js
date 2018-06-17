@@ -3,7 +3,7 @@ const request = require('../../../app.common.spec').request;
 const expect = require('../../../app.common.spec').expect;
 const server = require('../../../app.common.spec').server;
 
-describe('Category module: categories endpoint', () => {
+describe('Account module: accounts endpoint', () => {
     let authToken;
     before(async () => {
         const { body } = await request(server)
@@ -17,48 +17,58 @@ describe('Category module: categories endpoint', () => {
         authToken = body.token;
 
     });
-    it('All categories: should response with Status 200 and list of categories', async () => {
+    it('All accounts: should response with Status 200 and list of accounts', async () => {
         const { body } = await request(server)
-            .get('/v1/categories')
+            .get('/v1/accounts')
             .headers({'Authorization': `Bearer ${authToken}`})
             .expect(200)
             .json(true)
             .end();
         expect(body).to.be.an('array');
     });
-    it('All categories Invalid token: should response with Status 401', async () => {
+    it('All accounts Invalid token: should response with Status 401', async () => {
         const { body } = await request(server)
-            .get('/v1/categories')
-            .headers({'Authorization': `Bearer 123`})
+            .get('/v1/accounts')
+            .headers({'Authorization': 'Bearer 123'})
             .expect(401)
             .json(true)
             .end();
         expect(body).to.eql('Authentication Error');
     });
-    it('One category: should response with Status 200 and category object', async () => {
+    it('One account: should response with Status 200 and account object', async () => {
         const { body } = await request(server)
-            .get('/v1/categories/1')
+            .get('/v1/accounts/1')
             .headers({'Authorization': `Bearer ${authToken}`})
             .expect(200)
             .json(true)
             .end();
         expect(body).to.be.an('object');
     });
-    it('One category not existent id: should response with Status 404', async () => {
-        const { body } = await request(server)
-            .get('/v1/categories/100000')
+    it('Should response with Status 404 if account not exists', async () => {
+        await request(server)
+            .get('/v1/accounts/100000')
             .headers({'Authorization': `Bearer ${authToken}`})
             .expect(404)
             .json(true)
             .end();
     });
-    it('One category Invalid token: should response with Status 401', async () => {
+    it('Should response with Status 401 if not authorized', async () => {
         const { body } = await request(server)
-            .get('/v1/categories/1')
-            .headers({'Authorization': `Bearer 123`})
+            .get('/v1/accounts/1')
+            .headers({'Authorization': 'Bearer 123'})
             .expect(401)
             .json(true)
             .end();
         expect(body).to.eql('Authentication Error');
     });
+
+    /**
+     * TBD:
+     * 1. Create account (200, 409)
+     * 2. Update account
+     * 3. Get open accounts
+     * 4. Get closed accounts
+     * 5. Get empty accounts
+     * 6. Get not empty accounts
+     */
 });
