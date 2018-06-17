@@ -1,8 +1,8 @@
 'use strict';
-const Account = require('../models').account,
+const { Account } = require('../models'),
     compose = require('koa-compose'),
     middleware = require('../../../middleware'),
-    bodySchema = require('../validators').add,
+    { add: bodySchema } = require('../validators'),
     { throwError, to } = require('../../../helpers');
 
 async function add(ctx) {
