@@ -39,8 +39,8 @@ async function login(ctx) {
 
 module.exports = compose([
     middleware.validator({
-      body: params
+        body: params
     }),
     login
-  ]);
+]);
 
