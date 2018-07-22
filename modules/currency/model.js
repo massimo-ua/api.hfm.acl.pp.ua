@@ -15,7 +15,7 @@ const Currency = db.define('currency', {
         type: Sequelize.STRING
       },
       home: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN
       },
       rate: {
         type: Sequelize.INTEGER
