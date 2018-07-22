@@ -1,12 +1,20 @@
 'use strict';
-const Account = require('../models'),
-    { throwError, to } = require('../../../helpers');
+const { Account } = require('../models'),
+    { throwError, to } = require('../../../helpers'),
+    compose = require('koa-compose'),
+    middleware = require('../../../middleware'),
+    { findbyid: schema } = require('../validators');
 
-async function getAll(ctx) {
-    const [err, accounts] = await to(Account.findAll({ include: ['type', 'currency']}));
-    if(err || !accounts) {
-        throwError('Accounts not found', true, 404);
+async function getById(ctx) {
+    const [err, account] = await to(Account.findOne({ where: { id: ctx.params.id } }, { include: ['type', 'currency']}));
+    if(err || !account) {
+        throwError('Account not found', true, 404);
     }
-    ctx.body = accounts;
+    ctx.body = account;
 }
-module.exports = getAll;
+module.exports = compose([
+    middleware.validator({
+        params: schema
+    }),
+    getById
+]);

@@ -1,9 +1,9 @@
 'use strict';
 const Transaction = require('../models').transaction,
-      User = require('../../user/model'),
-      { throwError, to } = require('../../../helpers');
+    User = require('../../user/model'),
+    { throwError, to } = require('../../../helpers');
 
-async function getById(ctx, next) {
+async function getById(ctx) {
     let err, transaction;
     [err, transaction] = await to(Transaction.findOne({ 
         where: { id: ctx.params.id },
