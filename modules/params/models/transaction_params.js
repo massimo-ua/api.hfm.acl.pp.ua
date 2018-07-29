@@ -4,7 +4,7 @@ const Sequelize = require('sequelize'),
     { throwError, to } = require('../../../helpers'),
     Category = require('../../category/model'),
     Currency = require('../../currency/model'),
-    Transaction = require('./transaction');
+    { transaction: Transaction } = require('../../transaction/models');
 const TransactionParams = db.define('transaction_param', {
     id: {
         type: Sequelize.INTEGER, 

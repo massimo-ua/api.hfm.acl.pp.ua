@@ -2,7 +2,8 @@
 const compose = require('koa-compose'),
     middleware = require('../../../middleware'),
     { addParam: bodySchema, byId: paramsSchema } = require('../validators'),
-    { transaction_param: TransactionParam, transaction: Transaction } = require('../models'),
+    { transaction: Transaction } = require('../models'),
+    { transaction_param: TransactionParam } = require('../../params/models'),
     { throwError, to } = require('../../../helpers');
 
 async function addTransactionParam(ctx) {
