@@ -1,13 +1,10 @@
 'use strict';
 
-const jsonwebtoken = require('jsonwebtoken');
 const compose = require('koa-compose');
-const logger = require("../../../logger");
-const User = require("../model");
-const middleware = require("../../../middleware");
-const config = require("../../../config");
+const User = require('../model');
+const middleware = require('../../../middleware');
 const joi = require('joi');
-const { createToken, throwError, to } = require("../../../helpers");
+const { createToken, throwError, to } = require('../../../helpers');
 
 const params = joi.object({
     login: joi.string().required(),
@@ -21,10 +18,10 @@ async function signup(ctx) {
         login: ctx.request.body.login,
         password: ctx.request.body.password,
         name: ctx.request.body.name
-     }));
-     if(err) {
+    }));
+    if(err) {
         throwError(err.message, true);
-     }
+    }
     [err, token] = await to(createToken(user));
     if(err) {
         throwError(err.message, true);
@@ -36,7 +33,7 @@ async function signup(ctx) {
 
 module.exports = compose([
     middleware.validator({
-      body: params
+        body: params
     }),
     signup
-  ]);
+]);

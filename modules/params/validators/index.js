@@ -1,6 +1,5 @@
 'use strict';
 module.exports = {
-    add: require('./add'),
-    findbyid: require('./findbyid'),
+    byId: require('./byId'),
     update: require('./update'),
 };

@@ -3,7 +3,7 @@ const Log = require('../model'),
       User = require('../../user/model'),
       { throwError, to } = require('../../../helpers');
 
-async function getAll(ctx, next) {
+async function getAll(ctx) {
     let err, logs;
     [err, logs] = await to(Log.findAll({ include: [{ model: User, as: 'user', attributes: ['_id','login','name']}] }));
     if(err || !logs) {
