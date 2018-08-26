@@ -1,5 +1,5 @@
 'use strict';
-const Currency = require('../model'),
+const Currency = require('../models'),
     compose = require('koa-compose'),
     middleware = require('../../../middleware'),
     { add: bodySchema } = require('../validators'),

@@ -3,7 +3,7 @@ const Sequelize = require('sequelize'),
     db = require('../../../db'),
     { throwError, to } = require('../../../helpers'),
     Category = require('../../category/model'),
-    Currency = require('../../currency/model'),
+    {model: Currency} = require('../../currency'),
     { transaction: Transaction } = require('../../transaction/models');
 const TransactionParams = db.define('transaction_param', {
     id: {

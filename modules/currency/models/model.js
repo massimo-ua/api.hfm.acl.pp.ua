@@ -1,7 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-const db = require('../../db');
+const db = require('../../../db');
 const Currency = db.define('currency', {
       _id: {
         type: Sequelize.INTEGER, primaryKey: true
