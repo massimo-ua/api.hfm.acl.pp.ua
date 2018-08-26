@@ -1,4 +1,5 @@
 'use strict';
+require('module-alias/register');
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const app = new Koa();
