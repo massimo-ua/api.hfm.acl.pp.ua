@@ -1,8 +1,6 @@
 'use strict'
 
-const request = require('./app.common.spec').request;
-const expect = require('./app.common.spec').expect;
-const server = require('./app.common.spec').server;
+const {request, expect, server} = require('./app.common.spec');
 
 function importTest(name, path) {
     describe(name, function () {
