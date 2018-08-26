@@ -1,5 +1,5 @@
 'use strict'
-
+require('module-alias/register');
 const {request, expect, server} = require('./app.common.spec');
 
 function importTest(name, path) {
