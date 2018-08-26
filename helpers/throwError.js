@@ -1,16 +1,23 @@
 'use strict';
 const logger = require('../logger');
-let error;
 
-const throwError = (err, log, statusCode) => {
+const throwError = (err, log = false, statusCode = 500) => {
     if(log) {
         logger.error(err);
     }
-    error = new Error(err);
-    if(statusCode) {
+    typeof err === 'object' ? throwConstructedError(err) : throwSimpleError(err, statusCode);
+};
+
+function throwSimpleError(err, statusCode = 500) {
+    const error = new Error(err);
+    if (statusCode) {
         error.status = statusCode;
     }
     throw error;
-};
+}
+
+function throwConstructedError(err) {
+    throw new err();
+}
 
 module.exports = throwError;
