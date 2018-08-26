@@ -1,5 +1,5 @@
 'use strict';
-const request = require('super-request');
+const request = require('supertest');
 const { expect } = require('chai');
 const server = require('./app').listen();
 
