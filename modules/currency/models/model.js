@@ -1,6 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
-const db = require('../../db');
+const Op = Sequelize.Op;
+const db = require('../../../db');
 const Currency = db.define('currency', {
       _id: {
         type: Sequelize.INTEGER, primaryKey: true
@@ -25,6 +26,15 @@ const Currency = db.define('currency', {
       }
     },
     {
-      timestamps: false
+      timestamps: false,
+      scopes: {
+        open: {
+          where: {
+            closed: {
+              [Op.eq]: null
+            }
+          }
+        },
+      }
     });
 module.exports = Currency;

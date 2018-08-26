@@ -27,6 +27,7 @@ describe('Api.hfm.acl.pp.ua test suite', function () {
     importTest('Auth', './modules/user/tests/auth.spec.js');
     importTest('Category', './modules/category/tests/category.spec.js');
     importTest('Account', './modules/account/tests/account.spec.js');
+    importTest('Currency', './modules/currency/tests/currency.spec.js');
     /*after(function () {
         console.log('after all tests');
     });*/

@@ -4,7 +4,7 @@ const Log = require('../model'),
       sequelize = require('sequelize'),
       { throwError, to } = require('../../../helpers');
 
-async function getByYear(ctx, next) {
+async function getByYear(ctx) {
     let err, logs;
     [err, logs] = await to(Log.findAll({
         where: sequelize.where(

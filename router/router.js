@@ -6,7 +6,8 @@ const compose = require('koa-compose'),
     accounts = require('../modules/account/routes'),
     { router: logs } = require('../modules/log'),
     { router: transactions } = require('../modules/transaction'),
-    { router: params } = require('../modules/params');
+    { router: params } = require('../modules/params'),
+    { router: currencies } = require('../modules/currency');
 
 const appRouter = compose([
     root.routes(), root.allowedMethods(),
@@ -16,6 +17,7 @@ const appRouter = compose([
     logs.routes(), logs.allowedMethods(),
     transactions.routes(), transactions.allowedMethods(),
     params.routes(), params.allowedMethods(),
+    currencies.routes(), currencies.allowedMethods(),
 ]);
 
 module.exports = appRouter; 

@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const db = require('../../../db');
-const Currency = require('../../currency/model');
+const {model: Currency} = require('../../currency');
 const AccountType = require('./account_type');
 const Account = db.define('account', {
     id: {
