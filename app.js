@@ -1,18 +1,17 @@
 'use strict';
 require('module-alias/register');
 const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
+// const bodyParser = require('koa-bodyparser');
 const app = new Koa();
-const logger = require('./logger');
 const router = require('./router');
-const middleware = require('./middleware');
+const { errorsInterceptor, requestLogger } = require('./middleware');
+const { serverErrorLogger, apiErrorLogger } = require('./helpers');
 
-
-app.use(middleware.requestLogger());
+app.use(errorsInterceptor);
+app.use(requestLogger());
 app.use(router);
 
-app.on('error', (err) => {
-    logger.error('Server error', { error: err.message });
-});
+app.on('error', serverErrorLogger);
+app.on('api-error', apiErrorLogger);
 
 module.exports = app;

@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 10.4
--- Dumped by pg_dump version 10.4 (Debian 10.4-2)
+-- Dumped by pg_dump version 10.5 (Debian 10.5-1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -129,7 +129,7 @@ ALTER TABLE public.categories OWNER TO hfm;
 --
 
 CREATE TABLE public.currencies (
-    _id integer NOT NULL,
+    id integer NOT NULL,
     name character varying(100),
     code character varying(3) NOT NULL,
     symbol character varying(1) DEFAULT NULL::character varying,
@@ -176,6 +176,38 @@ ALTER TABLE public.log_id_seq OWNER TO hfm;
 
 ALTER SEQUENCE public.log_id_seq OWNED BY public.logs.id;
 
+
+--
+-- Name: plans_id_seq; Type: SEQUENCE; Schema: public; Owner: hfm
+--
+
+CREATE SEQUENCE public.plans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.plans_id_seq OWNER TO hfm;
+
+--
+-- Name: plans; Type: TABLE; Schema: public; Owner: hfm
+--
+
+CREATE TABLE public.plans (
+    id integer DEFAULT nextval('public.plans_id_seq'::regclass) NOT NULL,
+    name character varying(100) NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    currency_id integer NOT NULL,
+    target bigint DEFAULT 0,
+    description character varying(255) DEFAULT NULL::character varying,
+    deleted_at date
+);
+
+
+ALTER TABLE public.plans OWNER TO hfm;
 
 --
 -- Name: transaction_params; Type: TABLE; Schema: public; Owner: hfm
@@ -374,7 +406,7 @@ ALTER TABLE ONLY public.categories
 --
 
 ALTER TABLE ONLY public.currencies
-    ADD CONSTRAINT currencies_pkey PRIMARY KEY (_id);
+    ADD CONSTRAINT currencies_pkey PRIMARY KEY (id);
 
 
 --
@@ -500,7 +532,7 @@ CREATE INDEX idx2_transactions ON public.transactions USING btree (transaction_d
 --
 
 ALTER TABLE ONLY public.accounts
-    ADD CONSTRAINT accounts_fk1 FOREIGN KEY (currency_id) REFERENCES public.currencies(_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT accounts_fk1 FOREIGN KEY (currency_id) REFERENCES public.currencies(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -517,6 +549,14 @@ ALTER TABLE ONLY public.accounts
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_fk1 FOREIGN KEY (parent_id) REFERENCES public.categories(id) ON DELETE RESTRICT;
+
+
+--
+-- Name: plans plans_currency_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hfm
+--
+
+ALTER TABLE ONLY public.plans
+    ADD CONSTRAINT plans_currency_id_fkey FOREIGN KEY (currency_id) REFERENCES public.currencies(id) ON DELETE RESTRICT;
 
 
 --

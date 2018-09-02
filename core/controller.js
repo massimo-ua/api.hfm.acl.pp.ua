@@ -1,23 +1,34 @@
-const middleware = require('@middleware');
-const helpers = require('@helpers');
 class BaseController {
-    constructor(services, validators, errors, middleware = middleware, helpers = helpers) {
-        this.services = services;
-        this.middleware = middleware;
-        this.helpers = helpers;
-        this.validators = validators;
-        this.errors = errors;
+    constructor(service) {
+        this.service = service;
         this.getById = this.getById.bind(this);
+        this.create = this.create.bind(this);
+        this.updateById = this.updateById.bind(this);
+        this.deleteById = this.deleteById.bind(this);
     }
 
-    getById(ctx) {
-        let err, item;
-        [err, item] = await to(this.services.scope('open').findOne({ where: { _id: ctx.params.id }}));
-        if(err || !item) {
-            throwError(this.errors.NotFound, true);
-        }
+    async getById(ctx) {
+        const item = await this.service.findById(ctx.params.id);
         ctx.body = item;
     }
+
+    async create(ctx) {
+        const item = await this.service.create(ctx.request.body);
+        ctx.body = item;
+    }
+
+    async updateById(ctx) {
+        const item = await this.service.findById(ctx.params.id);
+        Object.assign(item, ctx.request.body);
+        await item.save();
+        ctx.body = item;
+    }
+
+    async deleteById(ctx) {
+        await this.service.deleteById(ctx.params.id);
+        ctx.body = { success: true };
+    }
+    
 }
 
 module.exports = BaseController;
