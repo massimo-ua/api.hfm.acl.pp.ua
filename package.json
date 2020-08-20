@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/massimo-ua/api.hfm.acl.pp.ua#readme",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "joi": "13.3.0",
     "jsonwebtoken": "^8.3.0",
     "koa": "2.5.1",
